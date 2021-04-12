@@ -4,10 +4,10 @@ Completed
     - Input field
     - List of the todos
     - Filter out active/incomplete/all
+    - Checkboxes
 
 In Progress
 
-    - Checkboxes
     - Dark mode
 
 Consider Adding

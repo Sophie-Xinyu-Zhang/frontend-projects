@@ -9,7 +9,7 @@
       <a @click="showCompletedToggle" class="cursor-pointer">Completed</a>
       <a @click="showActiveToggle" class="cursor-pointer">Active</a>
     </div>
-    <button @click="debug" class="cursor-default">Show all in console</button>
+    <!-- <button @click="debug" class="cursor-default">Show all in console</button> -->
   </div>
 </template>
 
@@ -29,9 +29,6 @@ export default {
       all: [],
       active: [],
       completed: [],
-      //   showAll: true,
-      //   showCompleted: false,
-      //   showActive: false,
       line: "none",
       selected: "all",
     };
@@ -45,7 +42,7 @@ export default {
           id: this.all.length,
         };
         this.all.push(item);
-        // this.active.push(item);
+        this.active.push(item);
         this.$emit("update-todo");
       }
     },
@@ -82,28 +79,17 @@ export default {
     changeStatus(idx) {
       if (this.selected === "all") {
         let item = this.all[idx];
-        console.log(item);
-        // if the item.completed was originally false, after execution, need to add to
-        // completed list and delete from active list
-        // otherwise add to active list and delete from completed list
         item.completed = !item.completed;
       } else if (this.selected === "active") {
         let item = this.active[idx];
-        console.log(item);
         this.updateAllList(item.id, true);
         this.addCList(item);
         this.deleteAList(item.id);
-        // change the completed status in the all list to true, and add to the completed list
-        // delete from the active list
       } else {
-        console.log("changing element status through completed list");
         let item = this.completed[idx];
-        console.log(item);
         this.updateAllList(item.id, false);
         this.deleteCList(item.id);
         this.addAList(item);
-        // change the completed status in the all list to false, add to the active list
-        // delete from the completed list
       }
     },
     updateAllList(itemId, value) {
@@ -122,14 +108,14 @@ export default {
     addAList(item) {
       this.active.push(item);
     },
-    debug() {
-      console.log("All:");
-      console.log(this.all);
-      console.log("Active:");
-      console.log(this.active);
-      console.log("Completed:");
-      console.log(this.completed);
-    },
+    // debug() {
+    //   console.log("All:");
+    //   console.log(this.all);
+    //   console.log("Active:");
+    //   console.log(this.active);
+    //   console.log("Completed:");
+    //   console.log(this.completed);
+    // },
   },
 };
 </script>

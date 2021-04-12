@@ -24,7 +24,9 @@
         >
       </li>
     </ul>
-    <p v-show="currentList.length === 0">This List is Currently Empty</p>
+    <p v-show="currentList.length === 0" class="text-xl mt-4 lineClass">
+      This List is Currently Empty
+    </p>
   </div>
 </template>
 
@@ -48,3 +50,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.lineClass {
+  text-decoration: underline 1px;
+}
+</style>
