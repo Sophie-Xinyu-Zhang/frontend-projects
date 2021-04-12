@@ -1,13 +1,13 @@
 <template>
   <div>
     <header-component msg="TO DO's" @add-new="getNew" />
-    <list-of-todos :todo="newTodo" />
+    <list-of-todos :todo="newTodo" @update-todo="updateTodo" />
   </div>
 </template>
 
 <script>
 import headerComponent from "./components/header.vue";
-import listOfTodos from "./components/list-card.vue";
+import listOfTodos from "./components/list.vue";
 
 import { ref } from "vue";
 
@@ -20,10 +20,14 @@ export default {
     const newTodo = ref("");
 
     function getNew(value) {
-      newTodo.value = value;
+      newTodo.value = value.value;
     }
 
-    return { getNew, newTodo };
+    function updateTodo() {
+      newTodo.value = "";
+    }
+
+    return { getNew, newTodo, updateTodo };
   },
 };
 </script>

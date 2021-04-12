@@ -13,7 +13,8 @@ import newTodo from "./new-todo.vue";
 export default {
   setup(_, { emit }) {
     function getNew(value) {
-      emit("add-new", value.value);
+      emit("add-new", value);
+      value.value = "";
     }
 
     return { getNew };
