@@ -8,11 +8,12 @@ Completed
 
 In Progress
 
-    - Dark mode
+    - Deletion
+    - Backend
+    - Database access
 
 Consider Adding
 
+    - Dark mode
     - User anthentication
-    - Backend
-    - Database access
     - Mobile view

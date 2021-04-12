@@ -7,21 +7,25 @@
       <li
         v-for="(todo, index) in currentList"
         :key="todo.id"
-        class="flex items-center h-16"
+        class="items-center py-2 justify-between gridLayout"
       >
-        <input
-          type="checkbox"
-          class="checkbox float-left w-6 h-6"
-          id="index"
-          :checked="todo.completed"
-          @input="changeStatus(index)"
-        />
-        <label
-          for="index"
-          class="ml-6"
+        <!-- <input
+            type="checkbox"
+            class="checkbox w-6 h-6"
+            id="index"
+            :checked="todo.completed"
+          /> -->
+        <button
+          @click="changeStatus(index)"
+          class="w-6 h-6 rounded-full border-2 border-black ml-6 cursor-pointer focus:outline-none"
+        ></button>
+        <p
+          class="ml-6 break-all"
           :style="todo.completed ? completed : incompleted"
-          >{{ todo.todo }}</label
         >
+          {{ todo.todo }}
+        </p>
+        <button @click="deleteTodo">D</button>
       </li>
     </ul>
     <p v-show="currentList.length === 0" class="text-xl mt-4 lineClass">
@@ -36,6 +40,7 @@ export default {
     return {
       completed: "text-decoration: line-through",
       incompleted: "none",
+      showDeleteOption: false,
     };
   },
   props: {
@@ -47,6 +52,17 @@ export default {
       // emit an event to the parent component, since that's where all the lists are
       // processed and handled
     },
+    toggleDeletion() {
+      // going to be implemented late, essentially css stuff
+      console.log("Deletion option changed");
+      this.showDeleteOption = true;
+    },
+    deleteTodo() {
+      console.log("Delete todo");
+      // set the display of this todo to none, and then emit the delete event
+      // to the root component, delete the todo from the all list, and only
+      // the all list
+    },
   },
 };
 </script>
@@ -54,5 +70,10 @@ export default {
 <style scoped>
 .lineClass {
   text-decoration: underline 1px;
+}
+.gridLayout {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr 1.5rem;
+  grid-column-gap: 1rem;
 }
 </style>
