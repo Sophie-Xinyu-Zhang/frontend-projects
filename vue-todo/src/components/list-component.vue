@@ -25,7 +25,16 @@
         >
           {{ todo.todo }}
         </p>
-        <button @click="deleteTodo">D</button>
+        <button @click="deleteTodo" class="mr-12">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
+            <path
+              fill="none"
+              stroke="#FFF"
+              stroke-width="2"
+              d="M1 4.304L3.696 7l6-6"
+            />
+          </svg>
+        </button>
       </li>
     </ul>
     <p v-show="currentList.length === 0" class="text-xl mt-4 lineClass">
@@ -73,7 +82,7 @@ export default {
 }
 .gridLayout {
   display: grid;
-  grid-template-columns: 1.5rem 1fr 1.5rem;
+  grid-template-columns: 1.5rem 1fr 2rem 0.5rem;
   grid-column-gap: 1rem;
 }
 </style>
