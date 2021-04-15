@@ -5,10 +5,10 @@ Completed
     - List of the todos
     - Filter out active/incomplete/all
     - Checkboxes
+    - Deletion
 
 In Progress
 
-    - Deletion
     - Backend
     - Database access
 

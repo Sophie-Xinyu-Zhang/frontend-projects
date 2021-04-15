@@ -3,18 +3,20 @@
     <list-component
       :currentList="updateComponent"
       @change-status="changeStatus"
+      @delete-todo="deleteTodo"
+      @mouse-over="mouseover"
+      @mouse-leave="mouseleave"
     ></list-component>
     <div v-if="all.length > 0" class="flex justify-evenly w-1/2 mt-10">
       <a @click="showAllToggle" class="cursor-pointer">All</a>
       <a @click="showCompletedToggle" class="cursor-pointer">Completed</a>
       <a @click="showActiveToggle" class="cursor-pointer">Active</a>
     </div>
-    <!-- <button @click="debug" class="cursor-default">Show all in console</button> -->
+    <button @click="debug" class="cursor-default">Debug button</button>
   </div>
 </template>
 
 <script>
-// this is the component responsible for showing all lists
 import listComponent from "./list-component.vue";
 
 export default {
@@ -40,6 +42,7 @@ export default {
           todo: this.todo,
           completed: false,
           id: this.all.length,
+          active: false,
         };
         this.all.push(item);
         this.active.push(item);
@@ -76,6 +79,24 @@ export default {
         this.selected = "all";
       }
     },
+    deleteTodo(idx) {
+      let item;
+      if (this.selected === "all") {
+        item = this.all[idx];
+        if (item.completed) {
+          this.deleteCList(item.id);
+        } else {
+          this.deleteAList(item.id);
+        }
+      } else if (this.selected === "active") {
+        item = this.active[idx];
+        this.deleteAList(item.id);
+      } else {
+        item = this.completed[idx];
+        this.deleteCList(item.id);
+      }
+      this.all = this.all.filter((each) => each.id !== item.id);
+    },
     changeStatus(idx) {
       if (this.selected === "all") {
         let item = this.all[idx];
@@ -108,14 +129,32 @@ export default {
     addAList(item) {
       this.active.push(item);
     },
-    // debug() {
-    //   console.log("All:");
-    //   console.log(this.all);
-    //   console.log("Active:");
-    //   console.log(this.active);
-    //   console.log("Completed:");
-    //   console.log(this.completed);
-    // },
+    mouseover(idx) {
+      if (this.selected === "all") {
+        this.all[idx].active = true;
+      } else if (this.selected === "active") {
+        this.active[idx].active = true;
+      } else {
+        this.completed[idx].active = true;
+      }
+    },
+    mouseleave(idx) {
+      if (this.selected === "all") {
+        this.all[idx].active = false;
+      } else if (this.selected === "active") {
+        this.active[idx].active = false;
+      } else {
+        this.completed[idx].active = false;
+      }
+    },
+    debug() {
+      console.log("All:");
+      console.log(this.all);
+      console.log("Active:");
+      console.log(this.active);
+      console.log("Completed:");
+      console.log(this.completed);
+    },
   },
 };
 </script>

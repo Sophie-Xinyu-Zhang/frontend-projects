@@ -8,16 +8,13 @@
         v-for="(todo, index) in currentList"
         :key="todo.id"
         class="items-center py-2 justify-between gridLayout"
+        v-on:mouseover="mouseover(index)"
+        v-on:mouseleave="mouseleave(index)"
       >
-        <!-- <input
-            type="checkbox"
-            class="checkbox w-6 h-6"
-            id="index"
-            :checked="todo.completed"
-          /> -->
         <button
           @click="changeStatus(index)"
           class="w-6 h-6 rounded-full border-2 border-black ml-6 cursor-pointer focus:outline-none"
+          :style="todo.completed ? buttonFill : buttonEmpty"
         ></button>
         <p
           class="ml-6 break-all"
@@ -25,15 +22,12 @@
         >
           {{ todo.todo }}
         </p>
-        <button @click="deleteTodo" class="mr-12">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6">
-            <path
-              fill="none"
-              stroke="#FFF"
-              stroke-width="2"
-              d="M1 4.304L3.696 7l6-6"
-            />
-          </svg>
+        <button
+          @click="deleteTodo(index)"
+          class="mr-12 cursor-pointer"
+          :style="todo.active ? hovering : notHovering"
+        >
+          D
         </button>
       </li>
     </ul>
@@ -44,12 +38,20 @@
 </template>
 
 <script>
+// import Icon from "vue-awesome/components/Icon";
+
 export default {
+  //   components: {
+  //     "v-icon": Icon,
+  //   },
   data() {
     return {
-      completed: "text-decoration: line-through",
+      completed: "text-decoration: line-through 2px",
       incompleted: "none",
-      showDeleteOption: false,
+      hovering: "display: block",
+      notHovering: "display: none",
+      buttonFill: "background: black",
+      buttonEmpty: "none",
     };
   },
   props: {
@@ -61,16 +63,17 @@ export default {
       // emit an event to the parent component, since that's where all the lists are
       // processed and handled
     },
-    toggleDeletion() {
-      // going to be implemented late, essentially css stuff
-      console.log("Deletion option changed");
-      this.showDeleteOption = true;
-    },
-    deleteTodo() {
-      console.log("Delete todo");
+    deleteTodo(idx) {
+      this.$emit("delete-todo", idx);
       // set the display of this todo to none, and then emit the delete event
       // to the root component, delete the todo from the all list, and only
       // the all list
+    },
+    mouseover: function(idx) {
+      this.$emit("mouse-over", idx);
+    },
+    mouseleave: function(idx) {
+      this.$emit("mouse-leave", idx);
     },
   },
 };
