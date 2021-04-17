@@ -44,12 +44,8 @@
 </template>
 
 <script>
-// import Icon from "vue-awesome/components/Icon";
 
 export default {
-  //   components: {
-  //     "v-icon": Icon,
-  //   },
   data() {
     return {
       completed: "text-decoration: line-through 2px",

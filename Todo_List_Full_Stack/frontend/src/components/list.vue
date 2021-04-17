@@ -103,11 +103,13 @@ export default {
         item.completed = !item.completed;
       } else if (this.selected === "active") {
         let item = this.active[idx];
+        this.active[idx].active = false;
         this.updateAllList(item.id, true);
         this.addCList(item);
         this.deleteAList(item.id);
       } else {
         let item = this.completed[idx];
+        this.completed[idx].active = false;
         this.updateAllList(item.id, false);
         this.deleteCList(item.id);
         this.addAList(item);

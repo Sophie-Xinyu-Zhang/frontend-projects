@@ -6,14 +6,15 @@ Completed
     - Filter out active/incomplete/all
     - Checkboxes
     - Deletion
+    - Backend
+    - Database access
 
 In Progress
 
-    - Backend
-    - Database access
+    - Connect frontend and backend using axios
 
 Consider Adding
 
     - Dark mode
-    - User anthentication
+    - User anthentication?
     - Mobile view
