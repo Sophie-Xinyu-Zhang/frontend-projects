@@ -18,6 +18,8 @@
 
 <script>
 import listComponent from "./list-component.vue";
+// import PostService from "../PostService.js";
+import axios from "axios";
 
 export default {
   components: {
@@ -35,15 +37,32 @@ export default {
       selected: "all",
     };
   },
+  async created() {
+    try {
+      // this.all = await PostService.getTodos();
+      axios.get("http://localhost:3000/").then((response) => {
+        this.all = response.data.todo;
+        console.log(response.data.todo);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  },
   watch: {
     todo: function() {
       if (this.todo) {
+        const newTodo = { content: this.todo };
         const item = {
-          todo: this.todo,
+          content: this.todo,
           completed: false,
-          id: this.all.length,
-          active: false,
+          _id: "",
         };
+        axios
+          .post("http://localhost:3000/add-todo", newTodo)
+          .then((response) => {
+            // console.log(response);
+            item._id = response.data._id;
+          });
         this.all.push(item);
         this.active.push(item);
         this.$emit("update-todo");
@@ -83,32 +102,56 @@ export default {
       let item;
       if (this.selected === "all") {
         item = this.all[idx];
+        const todoId = { _id: item._id };
+        axios
+          .post("http://localhost:3000/delete-todo", todoId)
+          .then((response) => console.log(response));
         if (item.completed) {
-          this.deleteCList(item.id);
+          this.deleteCList(item._id);
         } else {
-          this.deleteAList(item.id);
+          this.deleteAList(item._id);
         }
       } else if (this.selected === "active") {
         item = this.active[idx];
-        this.deleteAList(item.id);
+        const todoId = { _id: item._id };
+        axios
+          .post("http://localhost:3000/delete-todo", todoId)
+          .then((response) => console.log(response));
+        this.deleteAList(item._id);
       } else {
         item = this.completed[idx];
-        this.deleteCList(item.id);
+        const todoId = { _id: item._id };
+        axios
+          .post("http://localhost:3000/delete-todo", todoId)
+          .then((response) => console.log(response));
+        this.deleteCList(item._id);
       }
-      this.all = this.all.filter((each) => each.id !== item.id);
+      this.all = this.all.filter((each) => each._id !== item._id);
     },
     changeStatus(idx) {
       if (this.selected === "all") {
         let item = this.all[idx];
+        const todoId = { _id: item._id };
+        axios
+          .post("http://localhost:3000/change-status", todoId)
+          .then((response) => console.log(response));
         item.completed = !item.completed;
       } else if (this.selected === "active") {
         let item = this.active[idx];
+        const todoId = { _id: item._id };
+        axios
+          .post("http://localhost:3000/change-status", todoId)
+          .then((response) => console.log(response));
         this.active[idx].active = false;
         this.updateAllList(item.id, true);
         this.addCList(item);
         this.deleteAList(item.id);
       } else {
         let item = this.completed[idx];
+        const todoId = { _id: item._id };
+        axios
+          .post("http://localhost:3000/change-status", todoId)
+          .then((response) => console.log(response));
         this.completed[idx].active = false;
         this.updateAllList(item.id, false);
         this.deleteCList(item.id);
@@ -116,17 +159,17 @@ export default {
       }
     },
     updateAllList(itemId, value) {
-      const target = this.all.findIndex((each) => each.id === itemId);
+      const target = this.all.findIndex((each) => each._id === itemId);
       this.all[target].completed = value;
     },
     deleteCList(itemId) {
-      this.completed = this.completed.filter((each) => each.id !== itemId);
+      this.completed = this.completed.filter((each) => each._id !== itemId);
     },
     addCList(item) {
       this.completed.push(item);
     },
     deleteAList(itemId) {
-      this.active = this.active.filter((each) => each.id !== itemId);
+      this.active = this.active.filter((each) => each._id !== itemId);
     },
     addAList(item) {
       this.active.push(item);

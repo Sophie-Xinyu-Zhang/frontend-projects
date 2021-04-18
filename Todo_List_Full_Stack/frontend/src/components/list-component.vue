@@ -20,7 +20,7 @@
           class="ml-6 break-all"
           :style="todo.completed ? completed : incompleted"
         >
-          {{ todo.todo }}
+          {{ todo.content }}
         </p>
         <button
           @click="deleteTodo(index)"
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
