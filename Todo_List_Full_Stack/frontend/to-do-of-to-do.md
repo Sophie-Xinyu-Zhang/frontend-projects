@@ -8,13 +8,13 @@ Completed
     - Deletion
     - Backend
     - Database access
+    - Connect frontend and backend using axios
 
 In Progress
 
-    - Connect frontend and backend using axios
+    - User anthentication?
 
 Consider Adding
 
     - Dark mode
-    - User anthentication?
     - Mobile view

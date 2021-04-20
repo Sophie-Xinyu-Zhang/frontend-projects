@@ -56,6 +56,7 @@ export default {
           content: this.todo,
           completed: false,
           _id: "",
+          active: false,
         };
         axios
           .post("http://localhost:3000/add-todo", newTodo)
@@ -142,7 +143,7 @@ export default {
         axios
           .post("http://localhost:3000/change-status", todoId)
           .then((response) => console.log(response));
-        this.active[idx].active = false;
+        this.active[idx].completed = false;
         this.updateAllList(item.id, true);
         this.addCList(item);
         this.deleteAList(item.id);
@@ -152,7 +153,7 @@ export default {
         axios
           .post("http://localhost:3000/change-status", todoId)
           .then((response) => console.log(response));
-        this.completed[idx].active = false;
+        this.completed[idx].completed = false;
         this.updateAllList(item.id, false);
         this.deleteCList(item.id);
         this.addAList(item);
